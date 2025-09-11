@@ -8,7 +8,6 @@ from app.service.Auth import Auth
 from app.command.CancelCourseCommand import CancelCourseCommand
 from app.command.ConfirmCourseCommand import ConfirmCourseCommand
 from app.command.CreateCourseCommand import CreateCourseCommand
-from app.command.DeleteCourseCommand import DeleteCourseCommand
 from app.command.EndCourseCommand import EndCourseCommand
 from app.command.GetMyCoursesCommand import GetMyCoursesCommand
 from app.command.GetPendingCoursesCommand import GetPendingCoursesCommand
@@ -17,7 +16,6 @@ from app.command.StartCourseCommand import StartCourseCommand
 from app.usecase.CancelCourseUseCase import CancelCourseUseCase
 from app.usecase.ConfirmCourseUseCase import ConfirmCourseUseCase
 from app.usecase.CreateCourseUseCase import CreateCourseUseCase
-from app.usecase.DeleteCourseUseCase import DeleteCourseUseCase
 from app.usecase.EndCourseUseCase import EndCourseUseCase
 from app.usecase.GetMyCoursesUseCase import GetMyCoursesUseCase
 from app.usecase.GetPendingCoursesUseCase import GetPendingCoursesUseCase
@@ -54,12 +52,6 @@ def start_course(course_id: uuid.UUID, command: StartCourseCommand, currentUser 
 def end_course(course_id: uuid.UUID, command: EndCourseCommand, currentUser = Depends(auth.getCurrentUser)):
     command.userConnected = currentUser
     useCase = EndCourseUseCase(course_id, command)
-    return useCase.execute()
-
-@app.delete("/{course_id}")
-def delete_course(course_id: uuid.UUID, currentUser = Depends(auth.getCurrentUser)):
-    command = DeleteCourseCommand(userConnected=currentUser)
-    useCase = DeleteCourseUseCase(course_id, command)
     return useCase.execute()
 
 @app.get("/my")

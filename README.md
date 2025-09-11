@@ -99,17 +99,7 @@ Avec :
 ### `GET /course/pending`
 
 **Description**: Récupère toutes les courses en attente (statut "demandée")
+
 **Permissions**: Utilisateurs avec le rôle `driver`
+
 **Réponse**: Liste des courses disponibles pour acceptation, triées par date de modification (récentes first)
-
-## Administration
-
-### `DELETE /course/{id}`
-
-**Description**: Supprime définitivement une course
-**Permissions**: Utilisateurs avec le rôle `admin`
-**Path Parameters**:
-
-- `id`: UUID de la course
-
-**Réponse**: Confirmation de suppression avec l'ID de la course supprimée

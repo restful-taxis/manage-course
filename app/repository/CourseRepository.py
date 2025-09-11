@@ -217,23 +217,3 @@ class CourseRepository:
         return db.query(Course).filter(
             Course.status == CourseStatus.DEMANDEE
         ).order_by(Course.updatedAt.desc()).all()
-
-    @Database.with_session
-    def deleteCourse(self, course_id: uuid.UUID, user_connected: dict, db=None) -> bool:
-        # Vérifier que l'utilisateur est bien un admin
-        user_roles = (user_connected or {}).get("roles", [])
-        if "admin" not in user_roles:
-            raise ValueError("Seuls les administrateurs peuvent supprimer une course")
-
-        # Récupérer la course
-        course = self.getCourseById(course_id, db=db)
-        if not course:
-            raise ValueError("Course non trouvée")
-
-        # Supprimer la course
-        db.delete(course)
-        db.commit()
-
-        return True
-
-    
