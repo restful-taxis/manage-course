@@ -1,0 +1,34 @@
+services:
+
+  coursedb:
+    restart: unless-stopped
+    image: postgres:17.6-alpine3.21
+    container_name: coursedb
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_PASSWORD: main
+      POSTGRES_USER: main
+    ports:
+      - "127.0.0.1:5434:5432"
+    volumes:
+      - pgdata-course:/var/lib/postgresql/data
+    networks:
+      - taxi-network
+
+  managecourse:
+    build: .
+    container_name: managecourse
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    networks:
+      - taxi-network
+
+networks:
+  taxi-network:
+    external: true
+
+volumes:
+  pgdata-course:
+    driver: local
