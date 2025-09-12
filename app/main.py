@@ -24,43 +24,43 @@ from app.usecase.StartCourseUseCase import StartCourseUseCase
 app = FastAPI(title="Course Microservice")
 auth = Auth()
 
-@app.post("/create")
+@app.post("/course/create")
 def create_course(command: CreateCourseCommand, currentUser = Depends(auth.getCurrentUser)):
     command.userConnected = currentUser
     useCase = CreateCourseUseCase(command)
     return useCase.execute()
 
-@app.post("/{course_id}/confirm")
+@app.post("/course/{course_id}/confirm")
 def confirm_course(course_id: uuid.UUID, command: ConfirmCourseCommand, currentUser = Depends(auth.getCurrentUser)):
     command.userConnected = currentUser
     useCase = ConfirmCourseUseCase(course_id, command)
     return useCase.execute()
 
-@app.post("/{course_id}/cancel")
+@app.post("/course/{course_id}/cancel")
 def cancel_course(course_id: uuid.UUID, command: CancelCourseCommand, currentUser = Depends(auth.getCurrentUser)):
     command.userConnected = currentUser
     useCase = CancelCourseUseCase(course_id, command)
     return useCase.execute()
 
-@app.post("/{course_id}/start")
+@app.post("/course/{course_id}/start")
 def start_course(course_id: uuid.UUID, command: StartCourseCommand, currentUser = Depends(auth.getCurrentUser)):
     command.userConnected = currentUser
     useCase = StartCourseUseCase(course_id, command)
     return useCase.execute()
 
-@app.post("/{course_id}/end")
+@app.post("/course/{course_id}/end")
 def end_course(course_id: uuid.UUID, command: EndCourseCommand, currentUser = Depends(auth.getCurrentUser)):
     command.userConnected = currentUser
     useCase = EndCourseUseCase(course_id, command)
     return useCase.execute()
 
-@app.get("/my")
+@app.get("/course/my")
 def get_my_courses(currentUser = Depends(auth.getCurrentUser)):
     command = GetMyCoursesCommand(userConnected=currentUser)
     useCase = GetMyCoursesUseCase(command)
     return useCase.execute()
 
-@app.get("/pending")
+@app.get("/course/pending")
 def get_pending_courses(currentUser = Depends(auth.getCurrentUser)):
     command = GetPendingCoursesCommand(userConnected=currentUser)
     useCase = GetPendingCoursesUseCase(command)
