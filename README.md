@@ -12,6 +12,11 @@ Avec :
 - `coursedb` : nom du conteneneur DB
 - `public.pem` : clé publique utilisée par les micro-services `driver` et `customer`
 
+# créer les tables : 
+```bash
+python -m app.scripts.create_tables
+```
+
 # Routes disponibles
 
 ## Gestion des courses
